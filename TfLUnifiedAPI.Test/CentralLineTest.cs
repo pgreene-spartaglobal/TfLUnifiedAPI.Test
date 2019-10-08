@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
+using RestSharp;
 
 namespace TfLUnifiedAPI.Test
 {
@@ -30,6 +31,20 @@ namespace TfLUnifiedAPI.Test
         public void ReturnCorrectTfLLineMode()
         {
             Assert.AreEqual("tube", singleTfLLine.TfLLineSingleResponseContent["modeName"].ToString());
+        }
+
+        [Test]
+        public void ReturnTfLLineStatus()
+        {
+            Assert.AreEqual("Good Service", singleTfLLine.TfLLineSingleResponseContent["lineStatuses"][0]["statusSeverityDescription"].ToString());
+        }
+
+        [Test]
+        public void TestServerHeader()
+        {
+            Assert.AreEqual("Server", singleTfLLine.restResponse.Headers[24].Name.ToString());
+            Assert.AreEqual("cloudflare", singleTfLLine.restResponse.Headers[24].Value.ToString());
+            
         }
     }
 }
